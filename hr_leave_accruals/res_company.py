@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2012 - 2014 Odoo Canada. All Rights Reserved.
+#    Copyright (C) 2014 Savoir-faire Linux. All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,9 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import (
-    hr_payslip,
-    hr_employee,
-    hr_payslip_worked_days,
-    hr_payslip_employees,
-)
+
+from openerp.osv import fields, orm
+
+
+class res_company(orm.Model):
+    _inherit = 'res.company'
+    _columns = {
+        'holidays_hours_per_day': fields.float(
+            'Number of Hours per Leave Day',
+            digits=(2, 2),
+            required=True,
+        ),
+    }
+
+    _default = {
+        'holidays_hours_per_day': 8.0,
+    }

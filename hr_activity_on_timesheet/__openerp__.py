@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014 Odoo Canada. All Rights Reserved.
+#    Copyright (C) 2014 - 2015 Savoir-faire Linux. All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -19,16 +19,24 @@
 ##############################################################################
 
 {
-    'name': 'Worked Days From Timesheet',
+    'name': 'Activity on Timesheet',
     'version': '1.0',
     'license': 'AGPL-3',
     'category': 'Generic Modules/Human Resources',
     'description': """
-Worked Days From Timesheet
-==========================
-* Add a button to import worked days from timesheet in a single payslip
-* Add the option to import worked days from timesheet in payslip batches
-  when generating payslips.
+Activity on Timesheet
+=====================
+The aim of this module is to allow users to enter details on their timesheet.
+
+With this module, employees can select an Activity which can be a leave type
+or a specific job position.
+
+A list of activities can be selected on analytic account to be authorized
+for this account. If no activities are selected for an account, every
+activities will be available to select with this account.
+
+This will allow in another module to import the hours from timesheet
+to worked days and distinguish every hour passed for each activity.
 
 Contributors
 ------------
@@ -38,14 +46,24 @@ Contributors
     'author': 'Savoir-faire Linux',
     'website': 'https://www.savoirfairelinux.com/',
     'depends': [
-        'hr_payroll',
         'hr_timesheet_sheet',
+        'hr_worked_days_activity',
+        'hr_contract_multi_jobs',
     ],
     'data': [
-        'hr_payslip_view.xml',
-        'hr_payslip_employees_view.xml',
+        'security/ir.model.access.csv',
+        'security/hr_contract_security.xml',
+        'view/hr_analytic_timesheet_view.xml',
+        'view/hr_timesheet_sheet_view.xml',
+        'view/account_analytic_account_view.xml',
+        'data/account_analytic_account_data.xml',
     ],
     'test': [],
     'demo': [],
     'installable': True,
+    'auto_install': False,
+    'application': True,
+    'js': ['static/src/js/timesheet.js'],
+    'css': ['static/src/css/timesheet.css'],
+    'qweb': ['static/src/xml/timesheet.xml'],
 }

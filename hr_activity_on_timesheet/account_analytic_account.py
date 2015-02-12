@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2012 - 2014 Odoo Canada. All Rights Reserved.
+#    Copyright (C) 2014 Savoir-faire Linux. All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -18,9 +18,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import (
-    hr_payslip,
-    hr_employee,
-    hr_payslip_worked_days,
-    hr_payslip_employees,
-)
+
+from openerp.osv import fields, orm
+
+
+class account_analytic_account(orm.Model):
+    _inherit = 'account.analytic.account'
+    _columns = {
+        'authorized_activity_ids': fields.many2many(
+            'hr.activity',
+            'account_analytic_activity_rel',
+            'analytic_account_id',
+            'activity_id',
+            'Authorized Activities',
+        ),
+        'activity_type': fields.selection(
+            (
+                ('leave', 'Leaves'),
+                ('job', 'Job Positions'),
+            ),
+            'Activity Type',
+            required=True,
+        ),
+    }
+
+    _defaults = {
+        'activity_type': 'job',
+    }
