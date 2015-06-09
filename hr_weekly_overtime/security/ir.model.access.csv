@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_hr_weekly_overtime_policy_line_manager,hr.weekly.overtime.policy.line.manager,model_hr_weekly_overtime_policy_line,base.group_hr_manager,1,1,1,1
+access_hr_weekly_overtime_policy_line_user,hr.weekly.overtime.policy.line.user,model_hr_weekly_overtime_policy_line,base.group_user,1,0,0,0
+
+access_hr_weekly_overtime_policy_manager,hr.weekly.overtime.policy.manager,model_hr_weekly_overtime_policy,base.group_hr_manager,1,1,1,1
+access_hr_weekly_overtime_policy_user,hr.weekly.overtime.policy.user,model_hr_weekly_overtime_policy,base.group_user,1,0,0,0
