@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-from . import test_employee_benefit
+from . import hr_salary_rule

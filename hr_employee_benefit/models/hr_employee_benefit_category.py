@@ -19,43 +19,37 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class HrEmployeeBenefitCategory(orm.Model):
+class HrEmployeeBenefitCategory(models.Model):
     _name = 'hr.employee.benefit.category'
     _description = 'Category of employee benefits'
-    _columns = {
-        'name': fields.char('Benefit Name', required=True),
-        'code': fields.char(
-            'Code', required=True, help=""
-            "The code that can be used in the salary rules to identify "
-            "the benefit",
-        ),
-        'description': fields.text(
-            'Description',
-            required=True,
-            help="Brief explanation of which benefits the category contains."
-        ),
 
-        'salary_rule_ids': fields.many2many(
-            'hr.salary.rule', 'salary_rule_employee_benefit_rel',
-            'benefit_id', 'salary_rule_id', 'Salary Rules',
-        ),
+    name = fields.Char('Benefit Name', required=True)
+    code = fields.Char(
+        'Code', required=True, help=""
+        "The code that can be used in the salary rules to identify "
+        "the benefit",
+    )
+    description = fields.Text(
+        'Description',
+        required=True,
+        help="Brief explanation of which benefits the category contains."
+    )
 
-        'rate_ids': fields.one2many(
-            'hr.employee.benefit.rate',
-            'category_id',
-            string="Benefit Rates",
-        ),
+    salary_rule_ids = fields.Many2many(
+        'hr.salary.rule', 'salary_rule_employee_benefit_rel',
+        'benefit_id', 'salary_rule_id', 'Salary Rules',
+    )
 
-        # Field used to enter an external identifier for a benefit category
-        # Example, pension plans may have a registration number
-        'reference': fields.char('Reference'),
-        'active': fields.boolean('active'),
+    rate_ids = fields.One2many(
+        'hr.employee.benefit.rate',
+        'category_id',
+        string="Benefit Rates",
+    )
 
-    }
-
-    _defaults = {
-        'active': True,
-    }
+    # Field used to enter an external identifier for a benefit category
+    # Example, pension plans may have a registration number
+    reference = fields.Char('Reference')
+    active = fields.Boolean('active', default=True)
