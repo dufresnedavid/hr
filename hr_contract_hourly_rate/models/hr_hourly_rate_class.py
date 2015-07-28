@@ -33,6 +33,11 @@ class hr_hourly_rate_class(models.Model):
     contract_job_ids = fields.One2many('hr.contract.job',
                                        'hourly_rate_class_id',
                                        string='Contract Jobs')
+    job_ids = fields.Many2many(
+        'hr.job', string='Related Jobs',
+        help="Jobs that can be matched with the hourly rate class "
+        "on the employee contract. If empty, can be matched with "
+        "any job.")
 
     @api.model
     @api.constrains('line_ids')

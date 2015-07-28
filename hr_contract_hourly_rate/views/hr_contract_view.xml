@@ -11,8 +11,15 @@
                     <field name="wage" attrs="{'invisible': [('salary_computation_method','=','hourly')],
                                                 'required': [('salary_computation_method','!=', 'hourly')]}"/>
                 </field>
+                <xpath expr="//field[@name='contract_job_ids']//field[@name='job_id']" position="attributes">
+                    <attribute name="on_change">onchange_job_id(job_id, hourly_rate_class_id)</attribute>
+                </xpath>
                 <xpath expr="//field[@name='contract_job_ids']//field[@name='job_id']" position="after">
-                    <field name="hourly_rate_class_id"/>
+                    <field name="hourly_rate_class_id" domain="[
+                        '|',
+                        ('job_ids', '=', job_id),
+                        ('job_ids', '=', False),
+                    ]"/>
                     <field name="hourly_rate"/>
                 </xpath>
             </field>

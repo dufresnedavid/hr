@@ -44,3 +44,31 @@ class hr_contract_job(models.Model):
                                            string='Hourly Rate Class')
     hourly_rate = fields.Float(string='Hourly Rate',
                                compute="_get_current_hourly_rate")
+
+    @api.multi
+    def onchange_job_id(self, job_id, hourly_rate_class_id):
+        rate_class_obj = self.env['hr.hourly.rate.class']
+        rate_class = rate_class_obj.browse(hourly_rate_class_id)
+        job = self.env['hr.job'].browse(job_id)
+
+        if (
+            rate_class and (
+                not rate_class.job_ids or
+                job in rate_class.job_ids
+            )
+        ):
+            return {}
+
+        available_classes = rate_class_obj.search([
+            '|',
+            ('job_ids', '=', job_id),
+            ('job_ids', '=', False),
+        ], limit=1)
+
+        return {
+            'value': {
+                'hourly_rate_class_id':
+                available_classes[0].id if available_classes
+                else False
+            }
+        }

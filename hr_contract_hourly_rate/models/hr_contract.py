@@ -26,7 +26,7 @@ class hr_contract(models.Model):
 
     salary_computation_method = fields.Selection(
         [('yearly', 'Annual Wage'),
-         ('monthly', 'Annual Wage'),
+         ('monthly', 'Monthly Wage'),
          ('hourly', 'Hourly Wage')],
         string='Salary Computation Method',
         help="Whether to use the annual wage or an hourly rate "
